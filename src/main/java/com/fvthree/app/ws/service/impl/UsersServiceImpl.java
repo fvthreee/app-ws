@@ -22,47 +22,47 @@ import com.fvthree.app.ws.utils.UserProfileUtils;
 
 public class UsersServiceImpl implements UsersService {
 	
-	DAO database;
+    DAO database;
 
     public UsersServiceImpl() {
         this.database = new MySQLDAO();
     }
 	
     @Inject
-	UserProfileUtils userProfileUtils;
+    UserProfileUtils userProfileUtils;
 
-	public UserDTO createUser(UserDTO user) {
-		UserDTO returnValue = null;
+    public UserDTO createUser(UserDTO user) {
+        UserDTO returnValue = null;
 		
-		// Validate required fields
-		userProfileUtils.validateRequiredFields(user);
+        // Validate required fields
+        userProfileUtils.validateRequiredFields(user);
 		
-		// Check if user already exists
-		UserDTO existingUser = this.getUserByUserName(user.getEmail());
+        // Check if user already exists
+        UserDTO existingUser = this.getUserByUserName(user.getEmail());
         if (existingUser != null) {
             throw new CouldNotCreateRecordException(ErrorMessages.RECORD_ALREADY_EXISTS.name());
         }
 		
-		// Generate Secure Public User ID
+	// Generate Secure Public User ID
         String userId = userProfileUtils.generateUserId(30);
         user.setUserId(userId);
 		
-		// Generate salt
+	// Generate salt
         String salt = userProfileUtils.getSalt(30);
-		// Generate secure password
+	// Generate secure password
         String encryptedPassword = userProfileUtils.generateSecurePassword(user.getPassword(), salt);
         user.setSalt(salt);
         user.setEncryptedPassword(encryptedPassword);
 		
-		// Record data into a database
+	// Record data into a database
         returnValue = this.saveUser(user);
 		
-		// return back the user profile
+	// return back the user profile
 		
-		return returnValue;
-	}
+	return returnValue;
+    }
 	
-	public UserDTO getUser(String id) {
+    public UserDTO getUser(String id) {
         UserDTO returnValue = null;
         try {
             this.database.openConnection();
