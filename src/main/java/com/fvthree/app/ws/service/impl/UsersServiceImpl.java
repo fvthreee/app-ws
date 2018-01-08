@@ -1,9 +1,6 @@
 package com.fvthree.app.ws.service.impl;
 
 import java.util.List;
-
-
-
 import javax.inject.Inject;
 
 import com.fvthree.app.ws.exceptions.CouldNotCreateRecordException;
