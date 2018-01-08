@@ -31,30 +31,30 @@ import com.fvthree.app.ws.ui.model.response.UserProfileRest;
 @Path("/users")
 public class UsersController {
 	
-	@Autowired
+    @Autowired
     private UsersService userService;
 	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public UserProfileRest createUser(CreateUserRequestModel requestObject) {
-		UserProfileRest returnValue = new UserProfileRest();
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public UserProfileRest createUser(CreateUserRequestModel requestObject) {
+        UserProfileRest returnValue = new UserProfileRest();
 		
-		// Prepare UserDTO
-		UserDTO userDto = new UserDTO();
-		BeanUtils.copyProperties(requestObject, userDto);
+        // Prepare UserDTO
+        UserDTO userDto = new UserDTO();
+        BeanUtils.copyProperties(requestObject, userDto);
 		
-		// Create new user
-		UserDTO createdUserProfile = userService.createUser(userDto);
+        // Create new user
+        UserDTO createdUserProfile = userService.createUser(userDto);
 		
-		// Prepare response
-		BeanUtils.copyProperties(createdUserProfile, returnValue);
+        // Prepare response
+        BeanUtils.copyProperties(createdUserProfile, returnValue);
 		
-		return returnValue;
-	}
+        return returnValue;
+    }
 	
-	@Secured
-	@GET
+    @Secured
+    @GET
     @Path("/{id}")
     @Produces({ MediaType.APPLICATION_JSON,  MediaType.APPLICATION_XML} )
     public UserProfileRest getUserProfile(@PathParam("id") String id)
@@ -69,7 +69,7 @@ public class UsersController {
         return returnValue;
     }
 	
-	@GET
+    @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<UserProfileRest> getUsers(@DefaultValue("0") @QueryParam("start") int start, 
             @DefaultValue("50") @QueryParam("limit") int limit) {
