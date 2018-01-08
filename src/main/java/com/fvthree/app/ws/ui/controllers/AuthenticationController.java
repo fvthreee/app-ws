@@ -22,14 +22,13 @@ import com.fvthree.app.ws.ui.model.response.AuthenticationDetails;
 @Path("/authentication")
 public class AuthenticationController {
 	
-	@Autowired
-	AuthenticationService authService;
+    @Autowired
+    AuthenticationService authService;
 	
-	@POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public AuthenticationDetails userLogin(LoginCredentials loginCredentials)
-    {
+    public AuthenticationDetails userLogin(LoginCredentials loginCredentials) {
         AuthenticationDetails returnValue = new AuthenticationDetails();
         
         UserDTO authenticatedUser = authService.authenticate(loginCredentials.getUserName(), loginCredentials.getUserPassword());
